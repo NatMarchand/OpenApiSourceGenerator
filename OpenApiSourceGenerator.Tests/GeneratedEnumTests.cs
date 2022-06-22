@@ -18,7 +18,7 @@ public class GeneratedEnumTests
         sb.ToString()
             .Should()
             .HaveNoDifferencesWith(@"
-///<summary>the color</summary>
+/// <summary> the color </summary>
 [CompilerGenerated]
 public enum Color
 {
@@ -41,7 +41,7 @@ public enum Color
         sb.ToString()
             .Should()
             .HaveNoDifferencesWith(@"
-///<summary>the color</summary>
+/// <summary> the color </summary>
 [CompilerGenerated]
 public enum Color
 {
