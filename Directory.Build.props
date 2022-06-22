@@ -1,0 +1,41 @@
+<Project>
+    <PropertyGroup>
+        <Product>OpenApiSourceGenerator</Product>
+        <Company>NatMarchand</Company>
+        <Copyright>NatMarchand - $([System.DateTime]::Now.Year)</Copyright>
+        <AssemblyName>NatMarchand.$(MSBuildProjectName)</AssemblyName>
+        <RootNamespace>$(AssemblyName)</RootNamespace>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DebugType>embedded</DebugType>
+        <LangVersion>preview</LangVersion>
+        <Version Condition="'$(Version)' == ''">0.0.0</Version>
+        <Major>$(Version.Split('.')[0])</Major>
+        <Minor>$(Version.Split('.')[1])</Minor>
+        <AssemblyVersion>$(Major).$(Minor).0.0</AssemblyVersion>
+        <FileVersion>$(Version).0</FileVersion>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    </PropertyGroup>
+
+    <!-- Sourcelink stuffs -->
+    <PropertyGroup>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    </PropertyGroup>
+    
+</Project>
