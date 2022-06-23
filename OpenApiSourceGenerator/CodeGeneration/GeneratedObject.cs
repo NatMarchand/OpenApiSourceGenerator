@@ -4,12 +4,6 @@ namespace NatMarchand.OpenApiSourceGenerator.CodeGeneration;
 
 public abstract class GeneratedObject
 {
-    public XmlDoc Documentation { get; }
-    protected GeneratedObject(XmlDoc? documentation)
-    {
-        Documentation = documentation ?? new XmlDoc(string.Empty);
-    }
-
     public void Render(StringBuilder sb)
     {
         RenderBefore(sb);
@@ -19,9 +13,9 @@ public abstract class GeneratedObject
 
     protected virtual void RenderBefore(StringBuilder sb)
     {
-        if (Documentation is { HasValues: true })
+        if (this is IHasDoc { Documentation.HasValues: true } hasDoc)
         {
-            sb.AppendLine(Documentation.ToString());
+            sb.AppendLine(hasDoc.Documentation.ToString());
         }
     }
 
@@ -31,5 +25,10 @@ public abstract class GeneratedObject
 
     protected virtual void RenderAfter(StringBuilder sb)
     {
+    }
+
+    public interface IHasDoc
+    {
+        XmlDoc Documentation { get; }
     }
 }

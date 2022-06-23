@@ -9,7 +9,6 @@ public class GeneratedNamespace : GeneratedObject
     public IList<GeneratedType> Types { get; } = new List<GeneratedType>();
 
     public GeneratedNamespace(string name)
-        : base(default)
     {
         Name = name;
     }

@@ -2,17 +2,18 @@
 
 namespace NatMarchand.OpenApiSourceGenerator.CodeGeneration;
 
-public abstract class GeneratedMember : GeneratedObject
+public abstract class GeneratedMember : GeneratedObject,GeneratedObject.IHasDoc
 {
+    public XmlDoc Documentation { get; }
     public string Name { get; }
     public string Visibility { get; set; } = "public";
     public string? Modifier { get; set; }
     public string ReturnType { get; set; } = "object";
     public IList<string> Attributes { get; } = new List<string>();
     protected GeneratedMember(string name, XmlDoc? documentation)
-        : base(documentation)
     {
         Name = name;
+        Documentation = documentation ?? new XmlDoc(string.Empty);
     }
 
     protected sealed override void RenderBefore(StringBuilder sb)

@@ -2,8 +2,9 @@
 
 namespace NatMarchand.OpenApiSourceGenerator.CodeGeneration;
 
-public abstract class GeneratedType : GeneratedObject
+public abstract class GeneratedType : GeneratedObject, GeneratedObject.IHasDoc
 {
+    public XmlDoc Documentation { get; }
     public string Name { get; }
     public abstract string Kind { get; set; }
     public string Visibility { get; set; } = "public";
@@ -15,9 +16,9 @@ public abstract class GeneratedType : GeneratedObject
     };
     public IList<GeneratedType> InnerTypes { get; } = new List<GeneratedType>();
     protected GeneratedType(string name, XmlDoc? documentation = default)
-        : base(documentation)
     {
         Name = name;
+        Documentation = documentation ?? new XmlDoc(string.Empty);
     }
 
     protected override void RenderBefore(StringBuilder sb)

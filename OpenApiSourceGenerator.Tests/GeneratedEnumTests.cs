@@ -18,7 +18,7 @@ public class GeneratedEnumTests
         sb.ToString()
             .Should()
             .HaveNoDifferencesWith(@"
-/// <summary> the color </summary>
+/// <summary>the color</summary>
 [CompilerGenerated]
 public enum Color
 {
@@ -41,7 +41,7 @@ public enum Color
         sb.ToString()
             .Should()
             .HaveNoDifferencesWith(@"
-/// <summary> the color </summary>
+/// <summary>the color</summary>
 [CompilerGenerated]
 public enum Color
 {
@@ -91,5 +91,25 @@ General Kenobi"!;
 /// 
 /// General Kenobi
 /// </summary>");
+    }
+
+
+    [Fact]
+    public void EmptyShouldBeEmpty()
+    {
+        XmlDoc d = new XmlDoc(string.Empty);
+
+        d.ToString()
+            .Should()
+            .Be(string.Empty);
+    }
+
+    [Fact]
+    public void ReservedCharsShouldBeEscaped()
+    {
+        XmlDoc d = new XmlDoc("& <3 '");
+        d.ToString()
+            .Should()
+            .Be(@"/// <summary>&amp; &lt;3 &apos;</summary>");
     }
 }

@@ -73,7 +73,7 @@ public class DocumentGenerator
 
                 if (!string.IsNullOrWhiteSpace(operation.Value.Description))
                 {
-                    doc.Add(Constants.XmlDoc.RemarksSection, operation.Value.Description);
+                    doc.AddRemarks(operation.Value.Description);
                 }
 
                 if (operation.Value.Deprecated)

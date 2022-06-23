@@ -17,19 +17,32 @@ public class XmlDoc
 
     public XmlDoc Add(string type, string? content, params KeyValuePair<string, string>[] attributes)
     {
-        content ??= string.Empty;
-        var split = content.Trim('\r', '\n', '\t').Split(new[] { Environment.NewLine }, StringSplitOptions.None).Select(x => x.Trim()).ToArray();
+        if (string.IsNullOrEmpty(content))
+        {
+            return this;
+        }
+
+        var split = content!.Trim('\r', '\n', '\t')
+            .Split(new[] { Environment.NewLine }, StringSplitOptions.None)
+            .Select(x => x.Trim())
+            .Select(x => x
+                .Replace("&", "&amp;")
+                .Replace(">", "&gt;")
+                .Replace("<", "&lt;")
+                .Replace("\"", "&quot;")
+                .Replace("'", "&apos;"))
+            .ToArray();
         var serializedAttributes = string.Join(" ", attributes.Select(p => $"{p.Key}=\"{p.Value}\""));
         switch (split)
         {
             case { Length: 0 } when attributes.Length > 0:
-                _lines.Add($"/// <{type} {serializedAttributes}> </{type}>");
+                _lines.Add($"/// <{type} {serializedAttributes}></{type}>");
                 break;
             case { Length: 1 } when attributes.Length == 0:
-                _lines.Add($"/// <{type}> {split[0]} </{type}>");
+                _lines.Add($"/// <{type}>{split[0]}</{type}>");
                 break;
             case { Length: 1 } when attributes.Length > 0:
-                _lines.Add($"/// <{type} {serializedAttributes}> {split[0]} </{type}>");
+                _lines.Add($"/// <{type} {serializedAttributes}>{split[0]}</{type}>");
                 break;
             case { Length: > 1 } when attributes.Length == 0:
                 _lines.AddRange(split.Select(x => $"/// {x}").Prepend($"/// <{type}>").Append($"/// </{type}>"));
@@ -58,6 +71,12 @@ public static class XmlDocExtensions
     public static XmlDoc AddResponse(this XmlDoc doc, string code, string? content = default)
     {
         doc.Add(Constants.XmlDoc.ResponseSection, content, new KeyValuePair<string, string>(Constants.XmlDoc.ResponseCodeAttribute, code));
+        return doc;
+    }
+
+    public static XmlDoc AddRemarks(this XmlDoc doc, string? content = default)
+    {
+        doc.Add(Constants.XmlDoc.RemarksSection, content);
         return doc;
     }
 }
