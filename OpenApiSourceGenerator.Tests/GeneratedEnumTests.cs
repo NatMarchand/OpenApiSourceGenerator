@@ -72,3 +72,24 @@ public enum Color
 }");
     }
 }
+
+
+public class XmlDocTests
+{
+    [Fact]
+    public void MultilineCommentShouldBePreserved()
+    {
+        XmlDoc d = @"
+Hello there
+
+General Kenobi"!;
+
+        d.ToString()
+            .Should()
+            .Be(@"/// <summary>
+/// Hello there
+/// 
+/// General Kenobi
+/// </summary>");
+    }
+}

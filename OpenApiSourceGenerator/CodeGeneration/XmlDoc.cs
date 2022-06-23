@@ -18,7 +18,7 @@ public class XmlDoc
     public XmlDoc Add(string type, string? content, params KeyValuePair<string, string>[] attributes)
     {
         content ??= string.Empty;
-        var split = content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+        var split = content.Trim('\r', '\n', '\t').Split(new[] { Environment.NewLine }, StringSplitOptions.None).Select(x => x.Trim()).ToArray();
         var serializedAttributes = string.Join(" ", attributes.Select(p => $"{p.Key}=\"{p.Value}\""));
         switch (split)
         {
