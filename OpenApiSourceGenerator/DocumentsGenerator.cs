@@ -52,18 +52,18 @@ public class DocumentsGenerator
         foreach (var pair in documents)
         {
             allApisInitialValue += $@"[{Utils.KeyToSymbol(pair.Key)}.Key] = {Utils.KeyToSymbol(pair.Key)}.Infos,{Environment.NewLine}";
-            o.InnerTypes.Add(new GeneratedClass(Utils.KeyToSymbol(pair.Key))
+            o.InnerTypes.Add(new GeneratedClass(Utils.KeyToSymbol(pair.Key), "Object containing metadata from all generated apis")
             {
                 Modifier = "static",
                 Members =
                 {
-                    new GeneratedField("Key")
+                    new GeneratedField("Key","The API document key")
                     {
                         Modifier = "const",
                         ReturnType = Constants.Type.String,
                         InitialValue =  @$"""{pair.Key}"""
                     },
-                    new GeneratedProperty("Infos")
+                    new GeneratedProperty("Infos", "The API infos")
                     {
                         IsReadOnly = true,
                         Modifier = "static",
@@ -74,7 +74,7 @@ public class DocumentsGenerator
             });
         }
         allApisInitialValue += "}";
-        o.Members.Insert(0, new GeneratedField("AllApis")
+        o.Members.Insert(0, new GeneratedField("AllApis", "All generated APIs")
         {
             Modifier = "static readonly",
             ReturnType = $"IReadOnlyDictionary<{Constants.Type.String}, {Constants.Type.OpenApiInfo}>",
