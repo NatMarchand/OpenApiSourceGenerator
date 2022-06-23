@@ -43,7 +43,7 @@ public class DocumentsGenerator
             }
         };
 
-        var o = new GeneratedClass("OpenApiInfos")
+        var o = new GeneratedClass("OpenApiInfos", "Object containing metadata from all generated apis")
         {
             Modifier = "static"
         };
@@ -52,7 +52,7 @@ public class DocumentsGenerator
         foreach (var pair in documents)
         {
             allApisInitialValue += $@"[{Utils.KeyToSymbol(pair.Key)}.Key] = {Utils.KeyToSymbol(pair.Key)}.Infos,{Environment.NewLine}";
-            o.InnerTypes.Add(new GeneratedClass(Utils.KeyToSymbol(pair.Key), "Object containing metadata from all generated apis")
+            o.InnerTypes.Add(new GeneratedClass(Utils.KeyToSymbol(pair.Key), $"Metadata for API {pair.Value.Info.Title}")
             {
                 Modifier = "static",
                 Members =
