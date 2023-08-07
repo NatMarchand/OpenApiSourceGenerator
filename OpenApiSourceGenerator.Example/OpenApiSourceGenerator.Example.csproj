@@ -1,21 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-		<CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)Generated</CompilerGeneratedFilesOutputPath>
-	</PropertyGroup>
+  <Import Project="../OpenApiSourceGenerator/NatMarchand.OpenApiSourceGenerator.props" />
 
-	<ItemGroup>
-		<None Remove="*.yaml" />
-		<AdditionalFiles Include="*.yaml" />
-	</ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <!--<CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)Generated</CompilerGeneratedFilesOutputPath>-->
+  </PropertyGroup>
 
-	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="Microsoft.OpenApi" Version="1.3.1" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\OpenApiSourceGenerator\OpenApiSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-	</ItemGroup>
+  <ItemGroup>
+    <None Remove="*.yaml" />
+    <AdditionalFiles Include="PetStore-v1.yaml"
+                     NSwag_OperationGenerationMode="MultipleClientsFromFirstTagAndOperationId"
+                     NSwag_UseCancellationToken="True"
+                     NSwag_RouteNamingStrategy="OperationId"
+                     NSwag_UseActionResultType="True"
+                     NSwag_GenerateJsonMethods="True"
+                     NSwag_JsonLibrary="SystemTextJson"
+                     NSwag_TemplateDirectory="$(MSBuildThisFileDirectory)..\.openapi"
+                     NSwag_ClassName="{controller}"
+                     />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenApiSourceGenerator\OpenApiSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+
 </Project>
