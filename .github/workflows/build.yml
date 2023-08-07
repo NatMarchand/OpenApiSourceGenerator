@@ -29,10 +29,8 @@ jobs:
       uses: gittools/actions/gitversion/execute@v0.9.7
       with:
         useConfigFile: true
-    - name: Test
-      run: dotnet test --no-build --verbosity normal --configuration Release -p:ContinuousIntegrationBuild=true -p:VersionPrefix="${GITVERSION_MAJORMINORPATCH}" -p:VersionSuffix="${GITVERSION_NUGETPRERELEASETAGV2}"
-    - name: Pack
-      run: dotnet pack --verbosity normal --configuration Release --output "./artifacts" -p:VersionPrefix="${GITVERSION_MAJORMINORPATCH}" -p:VersionSuffix="${GITVERSION_NUGETPRERELEASETAGV2}" -p:ContinuousIntegrationBuild=true
+    - name: Build
+      run: dotnet build OpenApiSourceGenerator/OpenApiSourceGenerator.csproj --verbosity normal --configuration Release --output "./artifacts" -p:VersionPrefix="${GITVERSION_MAJORMINORPATCH}" -p:VersionSuffix="${GITVERSION_NUGETPRERELEASETAGV2}" -p:ContinuousIntegrationBuild=true
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
